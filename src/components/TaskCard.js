@@ -39,10 +39,10 @@ function TaskCard(props){
     const completedProperty="border-3 border border-success text-success fw-bold";
     return(
         <div className="col-lg-3 col-md-4 col-sm-6 col-12 d-flex my-2">
-            <div class="card border border-3 border-primary w-100">
-                <div class="card-body flex-fill">
-                  <h5 class="card-title text-center text-primary fw-bold">{task.title}</h5>
-                  <p class="card-text fw-semibold fst-italic">{task.description}</p>
+            <div className="card border border-3 border-primary w-100">
+                <div className="card-body flex-fill">
+                  <h5 className="card-title text-center text-primary fw-bold">{task.title}</h5>
+                  <p className="card-text fw-semibold fst-italic">{task.description}</p>
                   <div className="text-center">
                   <div className={`rounded-pill my-1 ${(task.status==='Pending')?pendingProperty:completedProperty}`}>{task.status}</div>
                   <div className="my-2 fw-semibold">&#128337; {task.createdOn}</div>

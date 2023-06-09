@@ -1,24 +1,31 @@
-import logo from './logo.svg';
+import { useEffect, useState } from 'react';
+import { Toaster } from 'react-hot-toast';
 import './App.css';
-
+import CreateTask from './components/CreateTask';
+import Navbar from './components/Navbar';
+import Tasks from './components/Tasks';
 function App() {
+  const [tasks, setTasks] = useState([]);
+  async function fetchAllTasks(){
+    let response=await fetch(process.env.REACT_APP_FETCHALL,{
+      method:"GET",
+      headers:{
+        "Content-Type":"application/json"
+      }
+    });
+    let allTasks=await response.json();
+    setTasks(allTasks.tasks);
+  }
+  useEffect(()=>{
+    fetchAllTasks();
+  },[])
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Navbar/>
+      <Toaster position="top-right"/>
+      <CreateTask tasks={tasks} setTasks={setTasks} fetchAllTasks={fetchAllTasks}/>
+      <Tasks tasks={tasks} setTasks={setTasks}/>
+    </>
   );
 }
 

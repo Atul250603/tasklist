@@ -68,9 +68,9 @@ function CreateTask({tasks,setTasks,fetchAllTasks,user}){
                             </div>
                             <div className="modal-footer w-100 text-center">
                               <button type="button" className="btn btn-secondary" ref={closeRef} data-bs-dismiss="modal">Close</button>
-                              <button type="button" className="btn btn-primary d-flex gap-1" disabled={showSpinner} onClick={(e)=>{createtask(e); }}><div class="spinner-border" role="status">
+                              <button type="button" className="btn btn-primary d-flex gap-1" disabled={showSpinner} onClick={(e)=>{createtask(e); }}>{(showSpinner)?<div class="spinner-border" role="status">
   <span class="visually-hidden">Loading...</span>
-</div><div>Create Task</div></button>
+</div>:<></>}<div>Create Task</div></button>
                             </div>
                         </div>
                     </div>

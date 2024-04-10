@@ -6,9 +6,11 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons'
 function CreateTask(props){
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
+    const [showSpinner,setshowSpinner]=useState(false);
     let date=new Date().toLocaleString();
     const closeRef=useRef(null);
     async function createtask(e){
+        setshowSpinner(true)
         if(title.trim().length===0 || !title){
             toast.error('Title Field is required');
             return;
@@ -37,9 +39,11 @@ function CreateTask(props){
             setTitle('');
             setDescription('');
             toast.success(respMsg.success);
-            await props.fetchAllTasks();
+            props.setTasks((prev)=>{[...prev,props.tasks]})
+            setshowSpinner(false);
         }
         else{
+            setshowSpinner(false);
             toast.error(respMsg.error);
         }
     }
@@ -64,7 +68,9 @@ function CreateTask(props){
                             </div>
                             <div className="modal-footer w-100 text-center">
                               <button type="button" className="btn btn-secondary" ref={closeRef} data-bs-dismiss="modal">Close</button>
-                              <button type="button" className="btn btn-primary" onClick={(e)=>{createtask(e)}}>Create Task</button>
+                              <button type="button" className="btn btn-primary d-flex gap-1" disabled={showSpinner} onClick={(e)=>{createtask(e); }}><div class="spinner-border" role="status">
+  <span class="visually-hidden">Loading...</span>
+</div><div>Create Task</div></button>
                             </div>
                         </div>
                     </div>

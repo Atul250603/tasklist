@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Jost:ital,wght@0,100..900;1,100..900&display=swap');
 .App {
   text-align: center;
 }
@@ -12,7 +13,76 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
+body{
+  font-family: "DM Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  background-color: #a5aea6;
+  color: black;
+}
+.navbar{
+  font-weight: bolder;
+}
+.login-btn{
+  font-size: 20px;
+}
+.login-btn:hover{
+  cursor: pointer;
+}
+.add-btn{
+  color:white;
+  background-color: #191f1a; 
+  border: 2px solid #191f1a; 
+  font-size: 30px;
+  box-shadow: 1px 1px 3px 1px #191f1a;
+}
+.analytics{
+  margin: 10px 0;
+  background-color: #292b2a;
+  color: black;
+  box-shadow: 1px 4px 1px 1px white;
+  padding: 10px;
+}
+.analytics-item{
+  width: 33%;
+}
+.greencolor{
+  color:rgb(10, 214, 10)
+}
+.redcolor{
+  color: rgb(202, 5, 5);
+}
+.greenbackground{
+  background-color:rgb(10, 214, 10)
+}
+.yellowshadow{
+  box-shadow: 1px 4px 1px 1px rgb(255, 191, 0);
+}
+.greenshadow{
+  box-shadow: 1px 4px 1px 1px rgb(10, 214, 10)
 
+}
+.mainpage{
+  height: 89vh;
+}
+.mainpagecontainer{
+  width: 100%;
+  height: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.mainpagecontainer>div:last-child{
+  width: 50%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.mainpage div img{
+  width: 100%;
+  height: 100%;
+}
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -34,5 +104,51 @@
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+@media screen and (max-width:1100px){
+  .mainpage div img{
+    height: 70%;
+  }
+  .analytics{
+    font-size: 20px!important;
+  }
+}
+@media screen and (max-width:800px){
+  .analytics{
+    font-size: 15px!important;
+  }
+  .mainpagecontainer{
+    flex-direction: column;
+    margin-top: 20px;
+  }
+  .mainpagecontainer>div{
+    height: 50%;
+    width: 100%;
+  }
+  .mainpagecontainer div img{
+    height: 100%;
+  }
+  .mainpagecontainer>div:last-child{
+    width: 100%;
+  }
+  .navbar>div{
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+@media screen and (max-width:500px) {
+  .navbar-brand,.navbar div,.login-btn,.mainpage div{
+    font-size: 20px!important;
+  }
+}
+@media screen and (max-width:650px) {
+  .analytics{
+    flex-direction: column;
+  }
+  .analytics-item{
+   width: 100%;
+   
   }
 }

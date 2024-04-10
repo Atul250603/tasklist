@@ -38,17 +38,19 @@ function TaskCard(props){
     const pendingProperty="border-3 border border-warning text-warning fw-bold";
     const completedProperty="border-3 border border-success text-success fw-bold";
     return(
-        <div className="col-lg-3 col-md-4 col-sm-6 col-12 d-flex my-2">
-            <div className="card border border-3 border-primary w-100">
-                <div className="card-body flex-fill">
-                  <h5 className="card-title text-center text-primary fw-bold">{task.title}</h5>
-                  <p className="card-text fw-semibold fst-italic">{task.description}</p>
+        <div className="container-fluid my-4">
+            <div className=" d-flex w-100">
+                <div className={`w-100 text-dark bg-white p-3 rounded ${(task.status==="Pending")?"yellowshadow":"greenshadow"}`}>
+                  <div className='d-flex align-items-center gap-3'>
+                    <div><h5 className="fs-2 fw-bold">{task.title}</h5></div>
+                    <div className={`fw-semibold px-2 py-1 rounded-pill ${(task.status==="Pending")?"bg-warning":"greenbackground"}`}>{(task.status==="Pending")?"Pending":"Completed"}</div>
+                  </div>
+                  <div className="my-1 fw-semibold">Created On - {new Date(task.createdOn).toLocaleDateString()}</div>
+                  <p className="fw-semibold">{task.description}</p>
                   <div className="text-center">
-                  <div className={`rounded-pill my-1 ${(task.status==='Pending')?pendingProperty:completedProperty}`}>{task.status}</div>
-                  <div className="my-2 fw-semibold">&#128337; {task.createdOn}</div>
                   <div className="btn-group">
                     {
-                      (task.status==='Completed')?<button className="rounded-circle border-3 btn btn-outline-danger fw-bold my-1" onClick={()=>{deleteTask()}}>&#128465;</button>:<><button className="border-3 rounded-circle btn btn-outline-success fw-bold my-1 mx-1"  onClick={()=>{pendingToCompleted()}}>&#10003;</button><button className="border-3 rounded-circle btn btn-outline-danger fw-bold my-1 mx-1"  onClick={()=>{deleteTask()}}>&#128465;</button></>
+                      (task.status==='Completed')?<button className="rounded-pill border-3 btn btn-outline-danger fw-bold my-1" onClick={()=>{deleteTask()}}>Delete</button>:<><button className="border-3 rounded-pill btn btn-outline-success fw-bold my-1 mx-1"  onClick={()=>{pendingToCompleted()}}>Completed</button><button className="border-3 rounded-pill btn btn-outline-danger fw-bold my-1 mx-1"  onClick={()=>{deleteTask()}}>Delete</button></>
                     }
                   </div>
                   </div>

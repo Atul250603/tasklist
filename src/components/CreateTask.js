@@ -1,6 +1,8 @@
 import { useRef, useState } from "react";
 import TaskForm from "./TaskForm";
 import toast from 'react-hot-toast';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
 function CreateTask(props){
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
@@ -19,7 +21,8 @@ function CreateTask(props){
             title,
             description,
             status:'Pending',
-            createdOn:date
+            createdOn:date,
+            user:props.user.email
         };
         let response=await fetch(process.env.REACT_APP_CREATETASK,{
             method:"POST",
@@ -42,16 +45,16 @@ function CreateTask(props){
     }
     return(
         <>
-            <div className="container mt-4">
-                <div className="createTaskBtn container text-center">
-                    <button type="button" className="border-3 rounded-pill btn btn-outline-primary fw-bold" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                        Add New Task
+            <div className="container mt-4 w-100">
+                <div className="createTaskBtn position-fixed bottom-0 end-0 m-5">
+                    <button type="button" className="rounded-circle px-3 py-1 add-btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        <FontAwesomeIcon icon={faPlus}/>
                     </button>
                 </div>
                 
                 <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div className="modal-dialog">
-                        <div className="modal-content">
+                        <div className="modal-content text-dark">
                             <div className="modal-header">
                                 <h1 className="modal-title fs-5" id="exampleModalLabel">New Task</h1>
                                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -59,7 +62,7 @@ function CreateTask(props){
                             <div className="modal-body">
                               <TaskForm title={title} setTitle={setTitle} description={description} setDescription={setDescription}/>
                             </div>
-                            <div className="modal-footer">
+                            <div className="modal-footer w-100 text-center">
                               <button type="button" className="btn btn-secondary" ref={closeRef} data-bs-dismiss="modal">Close</button>
                               <button type="button" className="btn btn-primary" onClick={(e)=>{createtask(e)}}>Create Task</button>
                             </div>

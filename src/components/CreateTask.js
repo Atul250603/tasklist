@@ -3,7 +3,7 @@ import TaskForm from "./TaskForm";
 import toast from 'react-hot-toast';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
-function CreateTask(props){
+function CreateTask({tasks,setTasks,fetchAllTasks,user}){
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [showSpinner,setshowSpinner]=useState(false);
@@ -24,7 +24,7 @@ function CreateTask(props){
             description,
             status:'Pending',
             createdOn:date,
-            user:props.user.email
+            user:user.email
         };
         let response=await fetch(process.env.REACT_APP_CREATETASK,{
             method:"POST",
@@ -39,7 +39,7 @@ function CreateTask(props){
             setTitle('');
             setDescription('');
             toast.success(respMsg.success);
-            props.setTasks((prev)=>{[...prev,props.tasks]})
+            setTasks((prev)=>{return[...prev,task]})
             setshowSpinner(false);
         }
         else{

@@ -3,6 +3,7 @@ import toast from 'react-hot-toast';
 function TaskCard(props){
     let {user,task,tasks,setTasks,idx}=props;
     const [showSpinner,setshowSpinner]=useState(false);
+    const [deleteshowSpinner,setdeleteshowSpinner]=useState(false);
     async function pendingToCompleted(){
       setshowSpinner(true);
       const url=`${process.env.REACT_APP_UPDATETASK}/${String(task._id)}`;
@@ -22,7 +23,7 @@ function TaskCard(props){
       setshowSpinner(false);
     }
     async function deleteTask(){
-      setshowSpinner(true);
+      setdeleteshowSpinner(true);
       const url=`${process.env.REACT_APP_DELETETASK}/${String(task._id)}`;
       let response=await fetch(url,{
         method: "POST",
@@ -39,7 +40,7 @@ function TaskCard(props){
         toast.error(respMsg.error);
       }
     
-      setshowSpinner(false);
+      setdeleteshowSpinner(false);
     }
     const pendingProperty="border-3 border border-warning text-warning fw-bold";
     const completedProperty="border-3 border border-success text-success fw-bold";
@@ -56,11 +57,11 @@ function TaskCard(props){
                   <div className="text-center">
                   <div className="btn-group">
                     {
-                      (task.status==='Completed')?<button className="rounded-pill border-3 btn btn-outline-danger fw-bold my-1 d-flex gap-1" disabled={showSpinner} onClick={()=>{deleteTask()}}>{(showSpinner)?<div class="spinner-border" role="status">
+                      (task.status==='Completed')?<button className="rounded-pill border-3 btn btn-outline-danger fw-bold my-1 d-flex gap-1" disabled={showSpinner} onClick={()=>{deleteTask()}}>{(deleteshowSpinner)?<div class="spinner-border" role="status">
                       <span class="visually-hidden">Loading...</span>
                     </div>:<></>}<div>Delete</div></button>:<><button className="border-3 rounded-pill btn btn-outline-success fw-bold my-1 mx-1 d-flex gap-1" disabled={showSpinner}  onClick={()=>{pendingToCompleted()}}>{(showSpinner)?<div class="spinner-border" role="status">
                       <span class="visually-hidden">Loading...</span>
-                    </div>:<></>}<div>Completed</div></button><button className="border-3 rounded-pill btn btn-outline-danger fw-bold my-1 mx-1 d-flex gap-1"  onClick={()=>{deleteTask()}}>{(showSpinner)?<div class="spinner-border" role="status">
+                    </div>:<></>}<div>Completed</div></button><button className="border-3 rounded-pill btn btn-outline-danger fw-bold my-1 mx-1 d-flex gap-1"  onClick={()=>{deleteTask()}}>{(deleteshowSpinner)?<div class="spinner-border" role="status">
                       <span class="visually-hidden">Loading...</span>
                     </div>:<></>}<div>Delete</div></button></>
                     }

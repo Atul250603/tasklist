@@ -42,9 +42,9 @@ function App() {
       {(isAuthenticated)?<Routes>
         <Route exact path="/" element={(!showSpinner)?<div className='w-100'><Analytics tasks={tasks} user={user}/>
         <CreateTask tasks={tasks} setTasks={setTasks} fetchAllTasks={fetchAllTasks} user={user}/>
-        <Tasks tasks={tasks} setTasks={setTasks} user={user}/></div>:<div class="spinner-border text-dark" role="status">
+        <Tasks tasks={tasks} setTasks={setTasks} user={user}/></div>:<div className='d-flex align-items-center justify-content-center' style={{height:"90vh"}}><div class="spinner-border text-dark" role="status">
   <span class="visually-hidden">Loading...</span>
-</div>}/>
+</div></div>}/>
       </Routes>:<div className='w-100'>
             <Home/>
         </div>}

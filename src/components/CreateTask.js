@@ -13,10 +13,12 @@ function CreateTask({tasks,setTasks,fetchAllTasks,user}){
         setshowSpinner(true)
         if(title.trim().length===0 || !title){
             toast.error('Title Field is required');
+            setshowSpinner(false);
             return;
         }
         if(description.trim().length===0 || !description){
             toast.error('Description Field is required');
+            setshowSpinner(false);
             return;
         }
         let task={

@@ -39,7 +39,7 @@ function CreateTask({tasks,setTasks,fetchAllTasks,user}){
             setTitle('');
             setDescription('');
             toast.success(respMsg.success);
-            setTasks((prev)=>{return[...prev,task]})
+            setTasks((prev)=>{return[...prev,respMsg.task]})
             setshowSpinner(false);
         }
         else{

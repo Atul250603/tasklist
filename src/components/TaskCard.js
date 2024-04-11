@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import toast from 'react-hot-toast';
 function TaskCard(props){
-    let {task,tasks,setTasks,idx}=props;
+    let {user,task,tasks,setTasks,idx}=props;
+    const [showSpinner,setshowSpinner]=useState(false);
     async function pendingToCompleted(){
       const url=`${process.env.REACT_APP_UPDATETASK}/${String(task._id)}`;
       let response=await fetch(url,{
@@ -21,19 +23,20 @@ function TaskCard(props){
     async function deleteTask(){
       const url=`${process.env.REACT_APP_DELETETASK}/${String(task._id)}`;
       let response=await fetch(url,{
-        method: "DELETE"
+        method: "POST",
+        body:JSON.stringify({email:user.email})
       });
       let respMsg=await response.json();
       if(respMsg.success){
         let allTasks=[...tasks];
         allTasks.splice(idx,1);
-        setTasks(allTasks);
         toast.success(respMsg.success);
+        setTasks(allTasks);
       }
       else{
-        toast.success(respMsg.error);
+        toast.error(respMsg.error);
       }
-        
+      
     }
     const pendingProperty="border-3 border border-warning text-warning fw-bold";
     const completedProperty="border-3 border border-success text-success fw-bold";
@@ -50,7 +53,13 @@ function TaskCard(props){
                   <div className="text-center">
                   <div className="btn-group">
                     {
-                      (task.status==='Completed')?<button className="rounded-pill border-3 btn btn-outline-danger fw-bold my-1" onClick={()=>{deleteTask()}}>Delete</button>:<><button className="border-3 rounded-pill btn btn-outline-success fw-bold my-1 mx-1"  onClick={()=>{pendingToCompleted()}}>Completed</button><button className="border-3 rounded-pill btn btn-outline-danger fw-bold my-1 mx-1"  onClick={()=>{deleteTask()}}>Delete</button></>
+                      (task.status==='Completed')?<button className="rounded-pill border-3 btn btn-outline-danger fw-bold my-1 d-flex gap-1" disabled={showSpinner} onClick={()=>{deleteTask()}}>{(showSpinner)?<div class="spinner-border" role="status">
+                      <span class="visually-hidden">Loading...</span>
+                    </div>:<></>}<div>Delete</div></button>:<><button className="border-3 rounded-pill btn btn-outline-success fw-bold my-1 mx-1 d-flex gap-1" disabled={showSpinner}  onClick={()=>{pendingToCompleted()}}>{(showSpinner)?<div class="spinner-border" role="status">
+                      <span class="visually-hidden">Loading...</span>
+                    </div>:<></>}<div>Completed</div></button><button className="border-3 rounded-pill btn btn-outline-danger fw-bold my-1 mx-1 d-flex gap-1"  onClick={()=>{deleteTask()}}>{(showSpinner)?<div class="spinner-border" role="status">
+                      <span class="visually-hidden">Loading...</span>
+                    </div>:<></>}<div>Delete</div></button></>
                     }
                   </div>
                   </div>

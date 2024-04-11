@@ -36,7 +36,7 @@ function App() {
       {(isAuthenticated)?<Routes>
         <Route exact path="/" element={<div className='w-100'><Analytics tasks={tasks} user={user}/>
         <CreateTask tasks={tasks} setTasks={setTasks} fetchAllTasks={fetchAllTasks} user={user}/>
-        <Tasks tasks={tasks} setTasks={setTasks}/></div>}/>
+        <Tasks tasks={tasks} setTasks={setTasks} user={user}/></div>}/>
       </Routes>:<div className='w-100'>
             <Home/>
         </div>}

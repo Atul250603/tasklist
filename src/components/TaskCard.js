@@ -4,6 +4,7 @@ function TaskCard(props){
     let {user,task,tasks,setTasks,idx}=props;
     const [showSpinner,setshowSpinner]=useState(false);
     async function pendingToCompleted(){
+      setshowSpinner(true);
       const url=`${process.env.REACT_APP_UPDATETASK}/${String(task._id)}`;
       let response=await fetch(url,{
         method: "PUT"
@@ -16,11 +17,12 @@ function TaskCard(props){
         toast.success(respMsg.success);
       }
       else{
-        toast.success(respMsg.error);
+        toast.error(respMsg.error);
       }
-
+      setshowSpinner(false);
     }
     async function deleteTask(){
+      setshowSpinner(true);
       const url=`${process.env.REACT_APP_DELETETASK}/${String(task._id)}`;
       let response=await fetch(url,{
         method: "POST",
@@ -36,7 +38,8 @@ function TaskCard(props){
       else{
         toast.error(respMsg.error);
       }
-      
+    
+      setshowSpinner(false);
     }
     const pendingProperty="border-3 border border-warning text-warning fw-bold";
     const completedProperty="border-3 border border-success text-success fw-bold";

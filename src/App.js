@@ -10,8 +10,10 @@ import { useAuth0 } from "@auth0/auth0-react";
 import Home from './components/Home';
 function App() {
   const [tasks, setTasks] = useState([]);
+  const [showSpinner,setshowSpinner]=useState(false);
   const { user, isAuthenticated, isLoading } = useAuth0();
   async function fetchAllTasks(){
+    setshowSpinner(true);
     let response=await fetch(process.env.REACT_APP_FETCHALL,{
       method:"POST",
       headers:{
@@ -21,11 +23,15 @@ function App() {
       body:JSON.stringify({email:user.email})
     });
     let allTasks=await response.json();
-    setTasks(allTasks.tasks);
+    if(allTasks && !allTasks.error){
+      setTasks(allTasks.tasks);
+    }
+    setshowSpinner(false);
   }
   useEffect(()=>{
     if(user){
-    fetchAllTasks();
+      
+      fetchAllTasks();
     }
   },[user])
   return (
@@ -34,9 +40,11 @@ function App() {
       <Navbar/>
       <Toaster position="top-right"/>
       {(isAuthenticated)?<Routes>
-        <Route exact path="/" element={<div className='w-100'><Analytics tasks={tasks} user={user}/>
+        <Route exact path="/" element={(!showSpinner)?<div className='w-100'><Analytics tasks={tasks} user={user}/>
         <CreateTask tasks={tasks} setTasks={setTasks} fetchAllTasks={fetchAllTasks} user={user}/>
-        <Tasks tasks={tasks} setTasks={setTasks} user={user}/></div>}/>
+        <Tasks tasks={tasks} setTasks={setTasks} user={user}/></div>:<div class="spinner-border text-dark" role="status">
+  <span class="visually-hidden">Loading...</span>
+</div>}/>
       </Routes>:<div className='w-100'>
             <Home/>
         </div>}
